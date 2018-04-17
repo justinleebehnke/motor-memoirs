@@ -1,12 +1,18 @@
 <template>
   <div class="vehicles">
-    <div>
+    <!-- <div v-for="item in vehicle" class="item"> -->
+      <div class="vehicle_button">
+        <button class="primary">Buick Lesabre</button>
+      </div>
+    <!-- </div> -->
+
+    <!-- <div>
       <form v-on:submit.prevent="vehicle" class="vehicleForm">
-	     <textarea v-model="vehicle_name" placeholder=""/><br/>
-       <textarea v-model="year" placeholder=""/><br/>
-       <textarea v-model="make" placeholder=""/><br/>
-       <textarea v-model="model" placeholder=""/><br/>
-       <textarea v-model="odometer" placeholder=""/><br/>
+	     Vehicle Name <input v-model="vehicle_name" placeholder=""></input><br/>
+       Year <input v-model="year" placeholder=""/><br/>
+       Make <input v-model="make" placeholder=""/><br/>
+       Model <input v-model="model" placeholder=""/><br/>
+       Odometer <input v-model="odometer" placeholder=""/><br/>
 	<div class="buttonWrap">
 	  <button class="primary" type="submit">Add Vehicle</button>
 	</div>
@@ -24,7 +30,7 @@
         {{item.model}}
         {{item.odometer}}
       </p>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -70,47 +76,7 @@
  }
 </script>
 <style scoped>
- .vehicles {
-     width: 600px;
- }
- .vehicleForm {
-     background: #eee;
-     padding: 10px;
-     margin-bottom: 10px;
- }
- .buttonWrap {
-     width: 100%;
-     display: flex;
- }
- button {
-     margin-left: auto;
-     height: 2em;
-     font-size: 0.9em;
- }
- textarea {
-     width: 100%;
-     height: 5em;
-     padding: 2px;
-     margin-bottom: 5px;
-     resize: none;
-     box-sizing: border-box;
- }
- .item {
-     border-bottom: 1px solid #ddd;
-     padding: 10px;
- }
- .tweet {
-     margin-top: 0px;
- }
- .idline {
-     margin-bottom: 0px;
- }
- .user {
-     font-weight: bold;
-     margin-right: 10px;
- }
- .handle {
-     margin-right: 10px;
-     color: #666;
- }
+  button {
+    width: 100%;
+  }
 </style>

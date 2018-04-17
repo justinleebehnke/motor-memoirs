@@ -1,10 +1,11 @@
 <template>
   <nav>
     <ul id="menu">
-      <li><img src="/static/ryanlerch-Red-Lamborghini-2400px.png"/></li>
-      <li><router-link to="/">Home</router-link></li>
-      <li class="right" v-if="loggedIn"><a @click="logout" href="#">Logout</a></li>
-      <li class="right" v-if="loggedIn">{{user.username}}</li>
+      <div v-if="loggedIn">
+        <li><router-link to="/">Home</router-link></li>
+        <li class="logout"><a @click="logout" href="#">Logout</a></li>
+        <!-- <li class="right">{{user.username}}</li> -->
+      </div>
       <form v-else class="right" v-on:submit.prevent="login">
       	<input v-model="email" placeholder="Email Address">
       	<input v-model="password" placeholder="Password">
@@ -55,23 +56,36 @@
 <style scoped>
  /* Strip the ul of padding and list styling */
  nav {
-     display: grid;
      margin-bottom: 20px;
+     display: grid;
+     width: 100%;
+     grid-template-columns: auto;
  }
  ul {
      list-style-type:none;
      margin:0;
      padding:0;
+     width: 100%;
  }
  /* Create a horizontal list with spacing */
  li {
      display:inline-block;
-     float: left;
-     margin-right: 20px;
-     height: 50px;
-     text-align: center;
+     width: 100%;
+     text-align: left;
      line-height: 50px;
      color: #666;
+ }
+ form {
+  margin-top: 50px;
+  display: grid;
+  width: 100%;
+  font-size: 22pt;
+ }
+ input {
+  display: block;
+  font-size: 22pt;
+  height: 50px;
+  border: 5px solid red;
  }
  /*Active color*/
  li a.active {
@@ -79,13 +93,10 @@
  /*Hover state for top level links*/
  li:hover a {
  }
- .right {
-     float: right;
- }
  .errorPlace {
      height: 20px;
  }
  img {
-     width: 50px;
+     width: 50%;
  }
 </style>

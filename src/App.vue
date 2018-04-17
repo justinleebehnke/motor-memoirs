@@ -16,13 +16,18 @@
 <style>
  /* https://color.adobe.com/CS04-color-theme-1994456/?showPublished=true */
  body {
+     padding: 10%;
      font-size: 18px;
-     padding: 20px 100px 0px 100px;
      font-family: 'Avenir', Helvetica, Arial, sans-serif;
      -webkit-font-smoothing: antialiased;
      -moz-osx-font-smoothing: grayscale;
+      font-size: 19pt;
+ }
+ form {
+  width: 100%;
  }
  button {
+     height: 80px;
      color: #fff;
      min-width: 100px;
      line-height: 1em;
@@ -33,27 +38,36 @@
      text-align: center;
      text-decoration: none;
      display: inline-block;
-     font-size: 1.2rem;
+     font-size: 22pt;
+     height: 80px;
      margin: 4px 2px;
+     width: 100%;
  }
  button.primary {
      background-color: #F35537;
+     width: 100%;
  }
  button.alternate {
      background-color: #77C4D3;
+     width: 100%;
  }
  button:focus {
      outline: none;
  }
  button:hover {
-     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),
+     0 6px 20px 0 rgba(0,0,0,0.19);
  }
  button:active {
      transform: translateY(4px);
  }
  input {
-     height: 20px;
+     width: 93%;
      padding: 10px;
+     margin: 2px;
+     font-size: 22pt;
+     height: 50px;
+     border: 5px solid #77C4D3;
  }
  .flexWrapper {
      display:flex;
@@ -63,8 +77,5 @@
  }
  .error {
      color: #F35537;
- }
- .column {
-     width: 800px;
  }
 </style>
