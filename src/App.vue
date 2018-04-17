@@ -41,15 +41,13 @@
      font-size: 22pt;
      height: 80px;
      margin: 4px 2px;
-     width: 100%;
+     max-width: 728px;
  }
  button.primary {
      background-color: #F35537;
-     width: 100%;
  }
  button.alternate {
      background-color: #77C4D3;
-     width: 100%;
  }
  button:focus {
      outline: none;
@@ -62,7 +60,7 @@
      transform: translateY(4px);
  }
  input {
-     width: 93%;
+     max-width: 700px;
      padding: 10px;
      margin: 2px;
      font-size: 22pt;

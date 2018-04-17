@@ -1,18 +1,20 @@
 <template>
+  <div>
+  <h1>Take care of your car,
+    and it will take care of you.</h1>
   <div class="welcome">
-    <h1>Take care of your car,
-      and it will take care of you.</h1>
     <form v-on:submit.prevent="register">
       <div id="container">
-      <input class="narrow" v-model="name" placeholder="First and Last Name">
-      <input class="narrow" v-model="email" placeholder="Email Address">
-      <input class="narrow" type="password" v-model="password" placeholder="Password">
+      <input v-model="name" placeholder="First and Last Name">
+      <input v-model="email" placeholder="Email Address">
+      <input type="password" v-model="password" placeholder="Password">
       <button class="alternate" type="submit">Create a Free Account</button>
       </div>
     </form>
     <p class="error">{{registerError}}</p>
     <img src="/static/ryanlerch-Red-Lamborghini-2400px.png"/>
     </div>
+  </div>
 </template>
 <script>
  export default {
@@ -71,4 +73,11 @@
      font-weight: normal;
      margin-bottom: 50px;
  }
+ @media screen and (min-width: 1010px) {
+ .welcome {
+   display: grid;
+   grid-template-columns: auto auto auto auto;
+   grid-row-gap: 40px;
+ }
+}
 </style>
