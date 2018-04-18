@@ -128,13 +128,16 @@ export default new Vuex.Store({
       context.commit('setVehicleSelected', false);
     },
     getRecords(context) {
-      axios.get("/api/users/" + context.state.user.id + "/vehicles/" + context.state.vehicle.id).then(response => {
+      console.log("FROM STORE: " +context.state.vehicle+ "<<<");
+      axios.get("/api/users/" + context.state.user.id + "/vehicles/" + context.state.vehicle_selected).then(response => {
+        console.log("VEHICLE ID: (get)" + context.state.vehicle.id);
         context.commit('setRecords',response.data.records);
       }).catch(err => {
         console.log("getVehicles failed:",err);
       });
     },
     addRecord(context, record) {
+      console.log("VEHICLE ID: (add)" + context.state.vehicle.id);
       axios.post("/api/users/" + context.state.user.id + "/vehicles/" + context.state.vehicle.id).then(response => {
 	       return context.dispatch('getRecords', context.state.vehicle.id);
       }).catch(err => {

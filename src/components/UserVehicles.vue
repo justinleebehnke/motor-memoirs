@@ -2,14 +2,15 @@
   <div>
   <!-- show records for selected vehicle -->
   <div v-if="vehicle_selected">
+    <h2>View Records: {{vehicle}}</h2>
     <div id="container">
       <div v-if="add_not_clicked">
         <button class="add" v-on:click="toggle_record">ADD RECORD</button>
       </div>
       <div v-else>
         <form v-on:submit.prevent="add_record">
-          <input placeholder="Describe Service Performed"/>
-          <input placeholder="Enter Date of Service"/>
+          <input v-model="description" placeholder="Describe Service Performed"/>
+          <input v-model="date" placeholder="Enter Date of Service"/>
           <button class="cancel" v-on:click="toggle_record">CANCEL</button>
           <button class="add" type="submit">SAVE RECORD</button>
         </form>
@@ -24,8 +25,8 @@
     <h2>Select the vehicle to access its records.</h2>
     <div v-for="item in vehicles">
       <div class="buttonWrap">
-        <form v-on:submit.prevent="select_vehicle">
-          <button class="primary" type="submit">{{item.vehicle_name}}</button>
+        <form v-on:submit.prevent="select_vehicle(item.vehicle_name)">
+          <button class="primary">{{item.vehicle_name}}</button>
         </form>
       </div>
     </div>
@@ -66,9 +67,12 @@
    data () {
      return {
         vehicle_name: '',
+        name_of_currently_selected: '',
         add_not_clicked: true,
         add_vehicle_not_clicked: true,
         remove_not_clicked: true,
+        description: '',
+        date: Date(),
       }
      },
    created: function() {
@@ -84,9 +88,24 @@
      },
      records: function () {
        return this.$store.getters.records;
-     }
+     },
+     vehicle: function () {
+       return this.$store.getters.vehicle;
+     },
    },
    methods: {
+     add_record: function() {
+       console.log("FROM USER: " + this.description + "<<");
+       this.$store.dispatch('addRecord',{
+         vehicle_name: this.vehicle_name,
+         description: this.description,
+         date: this.date,
+       }).then(vehicle_name => {
+	      this.vehicle_name = "";
+        this.description = "";
+        date: this.date = Date();
+       });
+     },
      add_vehicle: function() {
        this.$store.dispatch('addVehicle',{
          vehicle_name: this.vehicle_name,
@@ -98,13 +117,11 @@
      delete_vehicle: function(name) {
        this.$store.dispatch('deleteVehicle',name).then(vehicle_name => {
 	      this.vehicle_name = "";
-        console.log("vehicle deleted");
+        this.remove_not_clicked = true;
        });
      },
-     select_vehicle: function() {
-       this.$store.dispatch('selectVehicle',{
-         vehicle_name: this.vehicle_name,
-       }).then(vehicle_name => {
+     select_vehicle: function(name) {
+       this.$store.dispatch('selectVehicle', name).then(vehicle_name => {
 	      this.vehicle_name = "";
        });
      },
