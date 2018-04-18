@@ -94,15 +94,33 @@ app.post('/api/users/:id/vehicles', (req, res) => {
     return knex('vehicles').insert({
       user_id: id,
       vehicle_name:req.body.vehicle_name});
-  }).then(ids => {
-    return knex('vehicles').where('id',ids[0]).first();
-  }).then(vehicle_name => {
-    res.status(200).json({vehicle_name:vehicle_name});
-    return;
+  }).then(vehicles => {
+  knex('users').join('vehicles','users.id','vehicles.user_id')
+  .where('users.id',id)
+  .orderBy('vehicle_name')
+  .select('vehicle_name').then(vehicles => {
+    res.status(200).json({vehicles:vehicles});
   }).catch(error => {
-    console.log(error);
     res.status(500).json({ error });
   });
-});
+})});
+// unfollow someone
+app.delete('/api/users/:id/vehicles/vehicle_name/:vehicle_name', (req,res) => {
+  // id of the user
+  let id = parseInt(req.params.id);
+  // name of the vehicle
+  let name = req.params.vehicle_name;
+  // make sure both of these users exist
+  knex('vehicles').where({'user_id':id,'vehicle_name':name}).first().del()
+  .then(vehicles => {
+  knex('users').join('vehicles','users.id','vehicles.user_id')
+  .where('users.id',id)
+  .orderBy('vehicle_name')
+  .select('vehicle_name').then(vehicles => {
+    res.status(200).json({vehicles:vehicles});
+  }).catch(error => {
+    res.status(500).json({ error });
+  });
+})});
 
 app.listen(3000, () => console.log('Server listening on port 3000!'));

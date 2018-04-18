@@ -12,6 +12,9 @@ export default new Vuex.Store({
     loginError: '',
     registerError: '',
     vehicles: [],
+    records: [],
+    vehicle: '',
+    vehicle_selected: false,
   },
   getters: {
     user: state => state.user,
@@ -19,6 +22,9 @@ export default new Vuex.Store({
     loginError: state => state.loginError,
     registerError: state => state.registerError,
     vehicles: state => state.vehicles,
+    records: state => state.records,
+    vehicle: state => state.vehicle,
+    vehicle_selected: state => state.vehicle_selected,
   },
   mutations: {
     setUser (state, user) {
@@ -36,6 +42,15 @@ export default new Vuex.Store({
     setVehicles (state, vehicles) {
       state.vehicles = vehicles;
     },
+    setRecords (state, records) {
+      state.records = records;
+    },
+    setVehicle (state, vehicle) {
+      state.vehicle = vehicle;
+    },
+    setVehicleSelected (state, status) {
+      state.vehicle_selected = status;
+    }
   },
   actions: {
     // Registration, Login //
@@ -92,10 +107,39 @@ export default new Vuex.Store({
     },
     addVehicle(context,vehicle_name) {
       axios.post("/api/users/" + context.state.user.id + "/vehicles", vehicle_name).then(response => {
-	       return context.dispatch('getVehicles');
+         context.commit('setVehicles',response.data.vehicles);
       }).catch(err => {
 	       console.log("addVehicle failed:",err);
       });
-    }
+    },
+    deleteVehicle(context,vehicle_name) {
+      axios.delete("/api/users/" + context.state.user.id + "/vehicles/vehicle_name/" + vehicle_name).then(response => {
+	       return context.commit('setVehicles',response.data.vehicles);
+      }).catch(err => {
+	       console.log("deleteVehicle failed:",err);
+      });
+    },
+    selectVehicle(context,vehicle_name) {
+      context.commit('setVehicle', vehicle_name);
+      context.commit('setVehicleSelected', true);
+    },
+    diselectVehicle(context) {
+      context.commit('setVehicle', '');
+      context.commit('setVehicleSelected', false);
+    },
+    getRecords(context) {
+      axios.get("/api/users/" + context.state.user.id + "/vehicles/" + context.state.vehicle.id).then(response => {
+        context.commit('setRecords',response.data.records);
+      }).catch(err => {
+        console.log("getVehicles failed:",err);
+      });
+    },
+    addRecord(context, record) {
+      axios.post("/api/users/" + context.state.user.id + "/vehicles/" + context.state.vehicle.id).then(response => {
+	       return context.dispatch('getRecords', context.state.vehicle.id);
+      }).catch(err => {
+	       console.log("addRecord failed:",err);
+      });
+    },
   }
 });

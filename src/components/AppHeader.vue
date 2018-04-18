@@ -2,10 +2,14 @@
   <nav>
     <ul id="menu">
       <div id="login_menu" v-if="loggedIn">
-        <button class="alternate">
-          <router-link id="home" to="/">Home</router-link>
-        </button>
-        <button id="logout" class="alternate" @click="logout" href="#">Logout</button>
+        <div v-if="vehicle_selected">
+          <button class="back" v-on:click="diselect_vehicle">BACK</button>
+          <button id="logout" class="alternate" @click="logout" href="#">Logout</button>
+        </div>
+        <div v-else>
+          <button id="logout" class="alternate" @click="logout" href="#">Logout</button>
+        </div>
+
         <!-- <li class="right">{{user.username}}</li> -->
       </div>
       <form v-else class="right" v-on:submit.prevent="login">
@@ -38,6 +42,9 @@
      loginError: function() {
        return this.$store.getters.loginError;
      },
+     vehicle_selected: function() {
+       return this.$store.getters.vehicle_selected;
+     },
    },
    methods: {
      login: function() {
@@ -45,13 +52,17 @@
          email: this.email,
          password: this.password,
        }).then(user => {
-	 this.email = '';
-	 this.password = '';
+      	 this.email = '';
+      	 this.password = '';
        });
      },
      logout: function() {
        this.$store.dispatch('logout');
-     }
+     },
+     diselect_vehicle: function() {
+       this.$store.dispatch('diselectVehicle');
+       this.add_not_clicked = true;
+     },
    }
  }
 </script>
@@ -84,9 +95,9 @@
      width: 100%;
  }
  /* Create a horizontal list with spacing */
- #home {
-   text-decoration: none;
-   color: inherit;
+ .back {
+   width: 25%;
+   background-color: #F35537;
  }
 li {
      display:inline-block;

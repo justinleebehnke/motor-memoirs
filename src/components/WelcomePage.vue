@@ -48,7 +48,6 @@
 .welcome {
   display: grid;
   grid-template-columns: auto;
-  grid-row-gap: 40px;
 }
  #container {
   align: center;

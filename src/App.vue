@@ -16,7 +16,7 @@
 <style>
  /* https://color.adobe.com/CS04-color-theme-1994456/?showPublished=true */
  body {
-     padding: 10%;
+     padding: 5%;
      font-size: 18px;
      font-family: 'Avenir', Helvetica, Arial, sans-serif;
      -webkit-font-smoothing: antialiased;
