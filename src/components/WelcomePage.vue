@@ -9,9 +9,10 @@
       <input v-model="email" placeholder="Email Address">
       <input type="password" v-model="password" placeholder="Password">
       <button class="alternate" type="submit">Create a Free Account</button>
+      <p class="error">{{registerError}}</p>
       </div>
     </form>
-    <p class="error">{{registerError}}</p>
+
     <img src="/static/ryanlerch-Red-Lamborghini-2400px.png"/>
     </div>
   </div>
@@ -21,7 +22,6 @@
    name: 'WelcomePage',
    data () {
      return {
-       username: '',
        email: '',
        password: '',
        name: '',
@@ -35,10 +35,9 @@
    methods: {
      register: function() {
        this.$store.dispatch('register',{
-	 username: this.username,
          email: this.email,
          password: this.password,
-	 name: this.name,
+	       name: this.name,
        });
      }
    }

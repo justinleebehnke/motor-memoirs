@@ -40,7 +40,7 @@ export default new Vuex.Store({
   actions: {
     // Registration, Login //
     register(context,user) {
-      axios.post("/api/users",user).then(response => {
+      axios.post("/api/users", user).then(response => {
         context.commit('setUser', response.data.user);
         context.commit('setLogin',true);
         context.commit('setRegisterError',"");
@@ -90,8 +90,8 @@ export default new Vuex.Store({
         console.log("getVehicles failed:",err);
       });
     },
-    addTweet(context,tweet) {
-      axios.post("/api/users/" + context.state.user.id + "/vehicles",vehicle).then(response => {
+    addVehicle(context,vehicle_name) {
+      axios.post("/api/users/" + context.state.user.id + "/vehicles", vehicle_name).then(response => {
 	       return context.dispatch('getVehicles');
       }).catch(err => {
 	       console.log("addVehicle failed:",err);

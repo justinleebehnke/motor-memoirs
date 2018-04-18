@@ -70,9 +70,6 @@
  .flexWrapper {
      display:flex;
  }
- .flexRight {
-     margin-left: auto;
- }
  .error {
      color: #F35537;
  }

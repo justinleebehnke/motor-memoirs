@@ -1,14 +1,16 @@
 <template>
   <nav>
     <ul id="menu">
-      <div v-if="loggedIn">
-        <li><router-link to="/">Home</router-link></li>
-        <li class="logout"><a @click="logout" href="#">Logout</a></li>
+      <div id="login_menu" v-if="loggedIn">
+        <button class="alternate">
+          <router-link id="home" to="/">Home</router-link>
+        </button>
+        <button id="logout" class="alternate" @click="logout" href="#">Logout</button>
         <!-- <li class="right">{{user.username}}</li> -->
       </div>
       <form v-else class="right" v-on:submit.prevent="login">
       	<input v-model="email" placeholder="Email Address">
-      	<input v-model="password" placeholder="Password">
+      	<input type="password" v-model="password" placeholder="Password">
       	<button class="primary" type="submit">Login</button>
       </form>
     </ul>
@@ -55,11 +57,25 @@
 </script>
 <style scoped>
  /* Strip the ul of padding and list styling */
+ .container {
+   display: grid;
+   grid-template-columns: auto, auto;
+ }
+ #home {
+   text-decoration: none;
+   color: inherit;
+ }
+ #logout {
+   margin-right: 0px;
+   margin-left: auto;
+   float: right;
+
+ }
+
  nav {
      margin-bottom: 20px;
-     display: grid;
      width: 100%;
-     grid-template-columns: auto;
+
  }
  ul {
      list-style-type:none;
@@ -68,12 +84,17 @@
      width: 100%;
  }
  /* Create a horizontal list with spacing */
- li {
+ #home {
+   text-decoration: none;
+   color: inherit;
+ }
+li {
      display:inline-block;
      width: 100%;
      text-align: left;
      line-height: 50px;
      color: #666;
+     text-decoration: none;
  }
  form {
   margin-top: 50px;
@@ -98,5 +119,9 @@
  }
  img {
      width: 50%;
+ }
+ .alternate {
+   padding-left: 100px;
+   padding-right: 100px;
  }
 </style>

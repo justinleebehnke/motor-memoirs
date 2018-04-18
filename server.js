@@ -41,25 +41,26 @@ app.post('/api/login', (req, res) => {
 });
 
 app.post('/api/users', (req, res) => {
-  if (!req.body.email || !req.body.password || !req.body.username || !req.body.name)
-    return res.status(400).send();
+  console.log("HERE");
+  if (!req.body.email || !req.body.password || !req.body.name) {
+    return res.status(400).send("Missing Values");
+  }
   knex('users').where('email',req.body.email).first().then(user => {
     if (user !== undefined) {
       res.status(403).send("Email address already exists");
       throw new Error('abort');
     }
-    return knex('users').where('username',req.body.username).first();
-  }).then(user => {
-    if (user !== undefined) {
-      res.status(409).send("User name already exists");
-      throw new Error('abort');
-    }
+    return knex('users').where('name',req.body.name).first();
+    }).then(user => {
     return bcrypt.hash(req.body.password, saltRounds);
-  }).then(hash => {
-    return knex('users').insert({email: req.body.email, hash: hash, username:req.body.username,
-				 name:req.body.name, role: 'user'});
+    }).then(hash => {
+    return knex('users').insert({
+      email: req.body.email,
+      hash: hash,
+			name:req.body.name,
+      role: 'user'});
   }).then(ids => {
-    return knex('users').where('id',ids[0]).first().select('username','name','id');
+    return knex('users').where('id',ids[0]).first().select('email','name','id');
   }).then(user => {
     res.status(200).json({user:user});
     return;
@@ -76,7 +77,7 @@ app.get('/api/users/:id/vehicles', (req, res) => {
   knex('users').join('vehicles','users.id','vehicles.user_id')
     .where('users.id',id)
     .orderBy('vehicle_name')
-    .select('vehicle_name','year','make','model','odometer').then(vehicles => {
+    .select('vehicle_name').then(vehicles => {
       res.status(200).json({vehicles:vehicles});
     }).catch(error => {
       res.status(500).json({ error });
@@ -84,19 +85,19 @@ app.get('/api/users/:id/vehicles', (req, res) => {
 });
 
 app.post('/api/users/:id/vehicles', (req, res) => {
+  if (req.body.vehicle_name === undefined ||
+    req.body.vehicle_name === "") {
+    return res.status(400).send("Missing Values");
+  }
   let id = parseInt(req.params.id);
   knex('users').where('id',id).first().then(user => {
     return knex('vehicles').insert({
       user_id: id,
-      vehicle_name:req.body.vehicle_name,
-      year:req.body.year,
-      make:req.body.make,
-      model:req.body.model,
-      odometer:req.body.odometer});
+      vehicle_name:req.body.vehicle_name});
   }).then(ids => {
     return knex('vehicles').where('id',ids[0]).first();
-  }).then(tweet => {
-    res.status(200).json({vehicle:vehicle});
+  }).then(vehicle_name => {
+    res.status(200).json({vehicle_name:vehicle_name});
     return;
   }).catch(error => {
     console.log(error);
